@@ -1,0 +1,38 @@
+{
+    "name": "zazalt/omen",
+    "description": "Omen",
+    "homepage": "https://github.com/Zazalt/Omen",
+    "keywords": [
+        "php", "pdo", "wrapper"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zazalt",
+            "email": "example@example.com",
+            "homepage": "https://github.com/Zazalt/Omen"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zazalt\\Omen\\": "src/"
+        }
+    },
+    "extra": {
+        "zazalt": {
+            "language": "php",
+            "title": "Omen",
+            "description": [
+                "Omen is a PHP PDO Wrapper"
+            ],
+            "github": "Zazalt",
+            "repository": "Omen",
+            "version": "alpha",
+            "generateUsage": false,
+            "examples": false
+        }
+    }
+}
