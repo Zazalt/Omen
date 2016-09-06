@@ -31,7 +31,11 @@ class Database extends Memcached
 
     public function __construct(Array $configuration)
     {
-        $dsn = "pgsql:host={$configuration['postgres']['host']};port={$configuration['postgres']['port']};dbname={$configuration['postgres']['database']};user={$configuration['postgres']['username']};password={$configuration['postgres']['password']}";
+        $dsn = null;
+        if(is_array($configuration) && count($configuration) > 0) {
+            $dsn = "pgsql:host={$configuration['postgres']['host']};port={$configuration['postgres']['port']};dbname={$configuration['postgres']['database']};user={$configuration['postgres']['username']};password={$configuration['postgres']['password']}";
+        }
+
         try {
             // create a PostgreSQL database connection
             $this->connection = new \PDO($dsn);
