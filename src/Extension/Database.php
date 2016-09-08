@@ -47,7 +47,7 @@ class Database extends Memcached
             }
         } catch (\PDOException $e) {
 			// TODO: warning
-            die($e->getMessage());
+            //die($e->getMessage());
             //Logs::error($e->getMessage(), __FILE__, __LINE__);
         }
 
