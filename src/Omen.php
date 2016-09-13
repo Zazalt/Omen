@@ -18,7 +18,7 @@ class Omen extends Extension\Database
 
     public function isConnected()
     {
-        return is_object($this->connection);
+        return boolval(is_object($this->connection));
     }
 
     public function query($query)
