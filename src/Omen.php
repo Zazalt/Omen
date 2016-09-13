@@ -65,11 +65,11 @@ class Omen extends Extension\Database
         // Order by
         if(is_array($orderBy) && count($orderBy) > 0) {
             $query .= " ORDER BY";
-            $i = 1;
+            $orderItem = 1;
             foreach ($orderBy as $orderRow => $orderDirection) {
-                $query .= ($i > 1) ? ',' : null;
+                $query .= ($orderItem > 1) ? ',' : null;
                 $query .= ' '. $orderRow .' '. $orderDirection;
-                ++$i;
+                ++$orderItem;
             }
         }
 
@@ -152,36 +152,36 @@ class Omen extends Extension\Database
 
     public function contentToString($array)
     {
-        $q = '';
-        $i = 1;
+        $queryPart = '';
+        $itemNo = 1;
         foreach ($array as $value) {
-            $q .= $i > 1 ? ',' : null;
+            $queryPart .= $itemNo > 1 ? ',' : null;
 
             if(!is_bool($value) && !is_array($value) && (is_null($value) || strlen($value) == 0)) {
-                $q .= 'NULL';
+                $queryPart .= 'NULL';
 
             } else if(is_string($value)) {
                 if(!preg_match("/'/", $value)) {
-                    $q .= "'{$value}'";
+                    $queryPart .= "'{$value}'";
 
                 } else if(!preg_match('/"/', $value)) {
-                    $q .= '"'. $value .'"';
+                    $queryPart .= '"'. $value .'"';
 
                 } else {
-                    $q .= "'". pg_escape_string($value) ."'";
+                    $queryPart .= "'". pg_escape_string($value) ."'";
                 }
 
             } else if(is_numeric($value)) {
-                $q .= $value;
+                $queryPart .= $value;
 
             } else if(is_bool($value)) {
-                $q .= (($value) ? 'TRUE' : 'FALSE');
+                $queryPart .= (($value) ? 'TRUE' : 'FALSE');
             }
 
-            ++$i;
+            ++$itemNo;
         }
 
-        return $q;
+        return $queryPart;
     }
 
     public function getOne($what = '*', $where = [], $orderBy = [], $limitOffset = [])
@@ -202,20 +202,20 @@ class Omen extends Extension\Database
 
     public function insert($content = array(), $returning = array())
     {
-        $q = "INSERT INTO {$this->modelName}(\"". implode('","', array_keys($content)) ."\") VALUES (". $this->contentToString($content) .')';
+        $query = "INSERT INTO {$this->modelName}(\"". implode('","', array_keys($content)) ."\") VALUES (". $this->contentToString($content) .')';
 
         if(is_array($returning) && count($returning) > 0) {
-            $q .= ' RETURNING '. implode(',', $returning);
+            $query .= ' RETURNING '. implode(',', $returning);
         } else {
-            $q .= ' RETURNING id';
+            $query .= ' RETURNING id';
         }
 
         if(false && preg_match('/^tags$/i', $this->modelName)) {
             echo $this->modelName .'<br />';
-            die($q);
+            die($query);
         }
 
-        $statment = $this->connection->prepare($q);
+        $statment = $this->connection->prepare($query);
         if($statment->execute()) {
             return $this->afterInsert($content, $statment->fetch(\PDO::FETCH_ASSOC));
         } else {
@@ -266,7 +266,7 @@ class Omen extends Extension\Database
 
     public function update($content = [], $where = [])
     {
-        $q = "UPDATE {$this->modelName} SET ". implode(', ', array_map(function ($value, $column) {
+        $query = "UPDATE {$this->modelName} SET ". implode(', ', array_map(function ($value, $column) {
 
             if(!is_bool($value) && (is_null($value) || strlen($value) == 0)) {
                 $value = 'NULL';
@@ -292,13 +292,13 @@ class Omen extends Extension\Database
             return '"'. $column . '" = ' . $value;
         }, $content, array_keys($content)));
 
-        $q .= ' WHERE '. $this->whereToString($where);
+        $query .= ' WHERE '. $this->whereToString($where);
 
         if(false && $this->modelName == 'galleries') {
-            die($q);
+            die($query);
         }
 
-        $statment = $this->connection->prepare($q);
+        $statment = $this->connection->prepare($query);
         if($statment->execute()) {
             return true;
         } else {
@@ -308,15 +308,15 @@ class Omen extends Extension\Database
 
     public function delete($where = [])
     {
-        $q = "DELETE FROM {$this->modelName}";
+        $query = "DELETE FROM {$this->modelName}";
 
-        $q .= ' WHERE '. $this->whereToString($where);
+        $query .= ' WHERE '. $this->whereToString($where);
 
         if(FALSE && $this->modelName == 'galleries') {
-            die($q);
+            die($query);
         }
 
-        $statment = $this->connection->prepare($q);
+        $statment = $this->connection->prepare($query);
         if($statment->execute()) {
             return true;
         } else {
