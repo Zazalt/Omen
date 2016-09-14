@@ -4,27 +4,6 @@ namespace Zazalt\Omen\Extension;
 
 class Database extends Memcached
 {
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    /**
-     * @var Singleton The reference to *Singleton* instance of this class
-     */
-    protected static $instance;
-
-    /**
-     * Returns the *Singleton* instance of this class.
-     *
-     * @return Singleton The *Singleton* instance.
-     */
-    public static function init()
-    {
-        //if (null === static::$instance) {
-            static::$instance = new static();
-        //}
-
-        return static::$instance;
-    }
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     protected $modelName;
     protected $connection;
     protected $memcached;

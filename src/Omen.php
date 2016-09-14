@@ -343,12 +343,14 @@ class Omen extends Extension\Database
         return $this;
     }
 
-    public function execute()
+    public final function execute()
     {
-        return $this->statment->execute();
+        $result = $this->statment->execute();
+        $this->reset();
+        return $result;
     }
 
-    public function fetch()
+    public final function fetch()
     {
         if(!$this->results) {
             $this->statment->execute();
@@ -365,6 +367,14 @@ class Omen extends Extension\Database
         // Clear
         unset($this->getOne, $this->query, $this->statment, $this->results, $this);
 
+        $this->reset();
+
         return $return;
+    }
+
+    private function reset()
+    {
+        $this->results = null;
+        $this->getOne = null;
     }
 }
