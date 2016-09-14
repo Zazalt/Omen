@@ -345,7 +345,7 @@ class Omen extends Extension\Database
 
     public function execute()
     {
-        $this->statment->execute();
+        return $this->statment->execute();
     }
 
     public function fetch()
