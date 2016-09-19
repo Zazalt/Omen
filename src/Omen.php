@@ -101,6 +101,10 @@ class Omen extends Extension\Database
         return $this;
     }
 
+    /**
+     * Example:
+     *  [['id', '=', 1]]
+     */
     public function whereToString($array)
     {
         $return = ' (';
