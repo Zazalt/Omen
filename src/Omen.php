@@ -90,9 +90,7 @@ class Omen extends Extension\Database
             }
 		}
 
-        if(FALSE && $this->modelName == 'images') {
-            die($query);
-        }
+        //die($query);
 
         // Statment
         $this->statment = $this->connection->prepare($query);
