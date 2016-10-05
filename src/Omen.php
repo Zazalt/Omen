@@ -9,6 +9,7 @@ class Omen extends Extension\Database
     private $cache = -1;
     private $results = false;
     private $getOne = false;
+    private $getCount = false;
 
     public function __construct(Array $configuration)
     {
@@ -40,10 +41,12 @@ class Omen extends Extension\Database
      */
     public function getAll($what = '*', $where = [], $orderBy = [], $limitOffset = [])
     {
+        $this->getCount = false;
         // What
         if(is_array($what) && count($what) > 0) {
             if(preg_match('/\((.*)\)/', $what[0], $match)) {
                 $what = 'COUNT('. $match[1] .')';
+                $this->getCount = true;
 
             } else if($what[0] == '*') {
                 $what = '*';
@@ -364,7 +367,12 @@ class Omen extends Extension\Database
             }
         }
 
-        $return = ($this->getOne) ? $this->results[0] : $this->results;
+        $return = $this->results;
+        if($this->getOne) {
+            $return = $this->results[0];
+        } else if($this->getCount) {
+            $return = $this->results[0]['count'];
+        }
 
         // Clear
         unset($this->getOne, $this->query, $this->statment, $this->results, $this);
