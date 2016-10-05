@@ -41,7 +41,6 @@ class Omen extends Extension\Database
      */
     public function getAll($what = '*', $where = [], $orderBy = [], $limitOffset = [])
     {
-        $this->getCount = false;
         // What
         if(is_array($what) && count($what) > 0) {
             if(preg_match('/\((.*)\)/', $what[0], $match)) {
@@ -386,5 +385,6 @@ class Omen extends Extension\Database
     {
         $this->results = null;
         $this->getOne = null;
+        $this->getCount = null;
     }
 }
