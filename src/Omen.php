@@ -373,9 +373,6 @@ class Omen extends Extension\Database
             $return = $this->results[0]['count'];
         }
 
-        // Clear
-        unset($this->getOne, $this->query, $this->statment, $this->results);
-
         $this->reset();
 
         return $return;
@@ -383,6 +380,9 @@ class Omen extends Extension\Database
 
     private function reset()
     {
+        // Clear
+        unset($this->getOne, $this->query, $this->statment, $this->results);
+
         $this->results = null;
         $this->getOne = null;
         $this->getCount = null;
