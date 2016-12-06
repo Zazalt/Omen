@@ -374,7 +374,7 @@ class Omen extends Extension\Database
         }
 
         // Clear
-        unset($this->getOne, $this->query, $this->statment, $this->results, $this);
+        unset($this->getOne, $this->query, $this->statment, $this->results);
 
         $this->reset();
 
