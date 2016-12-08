@@ -2,35 +2,35 @@
 
 namespace Zazalt\Omen\Extension;
 
+use Zazalt\Omen\Engine\MySQL;
+use Zazalt\Omen\Engine\PostgreSQL;
+
 class Database extends Memcached
 {
     const ENGINE_POSTGRESQL = 'postgresql'; // Default port: 5432
     const ENGINE_MYSQL      = 'mysql';      // Default port: 3306
 
+    protected $engine = self::ENGINE_POSTGRESQL;
     protected $modelName;
     protected $connection;
     protected $memcached;
 
-    public function __construct(Array $configuration)
+    public function __construct(array $configuration)
     {
-        $dsn = null;
-        if(is_array($configuration) && count($configuration) > 0) {
-            $dsn = "pgsql:host={$configuration['postgres']['host']};port={$configuration['postgres']['port']};dbname={$configuration['postgres']['database']};user={$configuration['postgres']['username']};password={$configuration['postgres']['password']}";
+        parent::__construct($configuration);
+
+        if(isset($configuration['engine'])) {
+            $this->engine = $configuration['engine'];
         }
 
-        try {
-            // create a PostgreSQL database connection
-            $this->connection = new \PDO($dsn);
-            //$this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        switch($this->engine) {
+            case self::ENGINE_POSTGRESQL:
+                $this->connection = new PostgreSQL($configuration);
+                break;
 
-            // display a message if connected to the PostgreSQL successfully
-            if ($this->connection) {
-                //echo "Connected to the <strong>$db</strong> database successfully!";
-            }
-        } catch (\PDOException $e) {
-			// TODO: warning
-            //die($e->getMessage());
-            //Logs::error($e->getMessage(), __FILE__, __LINE__);
+            case self::ENGINE_MYSQL:
+                $this->connection = MySQL::config($configuration)->connect();
+                break;
         }
 
         $this->memcached = parent::__construct();

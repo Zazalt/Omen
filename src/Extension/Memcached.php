@@ -12,17 +12,17 @@ class Memcached extends MiddleMemcached
 {
     public function __construct()
     {
-		global $config;
-
-		if($config['memcached']['enable'] && class_exists('Memcache')) {
+        /*
+		if(isset($configuration['memcached']) && $configuration['memcached']['enable'] && class_exists('Memcache')) {
 			$memcache = new \Memcache;
 
-			$isMemcacheAvailable = @$memcache->connect($config['memcached']['host'], $config['memcached']['port']);
+			$isMemcacheAvailable = @$memcache->connect($configuration['memcached']['host'], $configuration['memcached']['port']);
 			if ($isMemcacheAvailable) {
 				return $memcache;
 			} else {
 				// TODO: warning
 			}
 		}
+        */
     }
 }
