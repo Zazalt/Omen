@@ -11,7 +11,7 @@ class Omen extends Extension\Database
     private $getOne = false;
     private $getCount = false;
 
-    public function __construct(Array $configuration)
+    public function __construct(array $configuration)
     {
         parent::__construct($configuration);
         $this->cache = -1;

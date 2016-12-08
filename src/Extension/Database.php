@@ -4,6 +4,9 @@ namespace Zazalt\Omen\Extension;
 
 class Database extends Memcached
 {
+    const ENGINE_POSTGRESQL = 'postgresql'; // Default port: 5432
+    const ENGINE_MYSQL      = 'mysql';      // Default port: 3306
+
     protected $modelName;
     protected $connection;
     protected $memcached;
