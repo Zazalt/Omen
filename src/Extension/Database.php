@@ -25,7 +25,7 @@ class Database extends Memcached
 
         switch($this->engine) {
             case self::ENGINE_POSTGRESQL:
-                $this->connection = new PostgreSQL($configuration);
+                $this->connection = PostgreSQL::config($configuration)->connect();
                 break;
 
             case self::ENGINE_MYSQL:
