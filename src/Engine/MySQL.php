@@ -12,6 +12,7 @@ class MySQL implements EngineInterface
         try {
             static::$connection = new \PDO($dsn, $configuration['username'], $configuration['password']);
         } catch (\PDOException $e) {
+            die($e->getMessage());
             // TODO: continue
         }
 
