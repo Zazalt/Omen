@@ -268,7 +268,7 @@ class Omen extends Extension\Database
         $this->insert($table, $columns, array($rowdict));
     }
 
-    public function update($content = [], $where = [])
+    public function updateRaw($content = [], $where = [])
     {
         $query = "UPDATE {$this->modelName} SET ". implode(', ', array_map(function ($value, $column) {
 
