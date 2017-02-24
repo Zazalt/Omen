@@ -17,7 +17,7 @@ class Omen extends Extension\Database
         $this->cache = -1;
     }
 
-    public function isConnected()
+    public function isConnected(): boolean
     {
         return boolval(is_object($this->connection));
     }
@@ -134,7 +134,7 @@ class Omen extends Extension\Database
                 // Bolean
                 } else if(is_bool($columnData[2])) {
                     $return .= ($columnData[2]) ? 'true' : 'false';
-
+                    
                 // Array
                 } else {
                     $return .= '('. implode(',', $columnData[2]) .')';
