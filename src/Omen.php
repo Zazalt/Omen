@@ -17,7 +17,7 @@ class Omen extends Extension\Database
         $this->cache = -1;
     }
 
-    public function isConnected(): boolean
+    public function isConnected(): bool
     {
         return boolval(is_object($this->connection));
     }
@@ -105,7 +105,7 @@ class Omen extends Extension\Database
      * Example:
      *  [['id', '=', 1]]
      */
-    public function whereToString($array)
+    public function whereToString(array $array): string
     {
         $return = ' (';
         foreach($array as $columnData) {
@@ -134,7 +134,7 @@ class Omen extends Extension\Database
                 // Bolean
                 } else if(is_bool($columnData[2])) {
                     $return .= ($columnData[2]) ? 'true' : 'false';
-                    
+
                 // Array
                 } else {
                     $return .= '('. implode(',', $columnData[2]) .')';
@@ -154,7 +154,7 @@ class Omen extends Extension\Database
         return preg_replace($reg['find'], $reg['replace'], $return);
     }
 
-    public function contentToString($array)
+    public function contentToString(array $array): string
     {
         $queryPart = '';
         $itemNo = 1;
@@ -310,7 +310,7 @@ class Omen extends Extension\Database
         }
     }
 
-    public function delete($where = [])
+    public function delete(array $where = []): bool
     {
         $query = "DELETE FROM {$this->modelName}";
 
@@ -378,7 +378,7 @@ class Omen extends Extension\Database
         return $return;
     }
 
-    private function reset()
+    private function reset(): void
     {
         // Clear
         unset($this->getOne, $this->query, $this->statment, $this->results);
