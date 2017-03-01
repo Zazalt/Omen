@@ -17,7 +17,8 @@ class OmenTest extends \Zazalt\Omen\Tests\ZazaltTest
     public function testContentToString(): void
     {
         $batteryTest = [
-            "test = 'test'" => ['test', '=', 'test']
+            "test = 'test'" => ['test', '=', 'test'],
+            "test > 'test'" => ['test', '>', 'test']
         ];
 
         foreach ($batteryTest as [$expected, $given]) {
