@@ -8,9 +8,15 @@ class PostgreSQL implements EngineInterface
 
     public static function config(array $configuration)
     {
-        $dsn = "pgsql:host={$configuration['host']};port={$configuration['port']};dbname={$configuration['database']}";
+        $host = (isset($configuration['host']) ? $configuration['host'] : null);
+        $port = (isset($configuration['port']) ? $configuration['port'] : null);
+        $database = (isset($configuration['database']) ? $configuration['database'] : null);
+        $username = (isset($configuration['username']) ? $configuration['username'] : null);
+        $password = (isset($configuration['password']) ? $configuration['password'] : null);
+
+        $dsn = "pgsql:host={$host};port={$port};dbname={$database}";
         try {
-            static::$connection = new \PDO($dsn, $configuration['username'], $configuration['password']);
+            static::$connection = new \PDO($dsn, $username, $password);
         } catch (\PDOException $e) {
             die($e->getMessage());
             // TODO: continue
