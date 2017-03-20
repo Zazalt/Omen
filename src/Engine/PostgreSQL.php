@@ -8,7 +8,7 @@ class PostgreSQL implements EngineInterface
 
     /**
      * @param array $configuration
-     * @return static
+     * @return \PDO
      */
     public static function config(array $configuration)
     {
