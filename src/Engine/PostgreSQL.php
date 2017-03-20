@@ -6,6 +6,10 @@ class PostgreSQL implements EngineInterface
 {
     private static $connection;
 
+    /**
+     * @param array $configuration
+     * @return static
+     */
     public static function config(array $configuration)
     {
         $host = (isset($configuration['host']) ? $configuration['host'] : null);
@@ -22,7 +26,8 @@ class PostgreSQL implements EngineInterface
             // TODO: continue
         }
 
-        return new static(self);
+        //return new static(self);
+        return static::$connection;
     }
 
     public static function connect()
