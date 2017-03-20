@@ -14,7 +14,7 @@ $autoloader = require dirname(__DIR__) . '/vendor/autoload.php';
 // Register test classes
 $autoloader->addPsr4('Zazalt\Omen\Tests\\', __DIR__);
 
-class ZazaltTest extends \PHPUnit_Framework_TestCase
+class ZazaltTest extends \PHPUnit\Framework\TestCase
 {
     public function loader($what, $params = null)
     {
